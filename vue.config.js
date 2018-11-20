@@ -72,19 +72,19 @@ module.exports = {
   devServer: {
     open: false,
     host: "0.0.0.0",
-    port: 8080,
+    port: 8083,
     https: false,
     hotOnly: false,
     // 参阅 https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
     proxy: {
       // 可不断添加
-      // "/api": {
-      //   target: "http://xk.quanfangtongvip.com",
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     "^/api": ""
-      //   }
-      // }
+      "/api": {
+        target: "http://xk.quanfangtongvip.com",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": ""
+        }
+      }
     }
     // before: app => {}
   },
