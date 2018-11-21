@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script>
+<script>  
   export default {
     data() {
       const validateUsername = (rule, value, callback) => {
@@ -41,8 +41,8 @@
 
       return {
         loginForm: {
-          username: 'admin',
-          password: '1111111'
+          username: '15311432059',
+          password: '123456'
         },
         loginRules: {
           username: [
@@ -58,13 +58,18 @@
     methods: {
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
-          console.log(valid);
           if (valid) {
             this.loading = true;
 
+            let sha256 = require("js-sha256").sha256;
+
             this.$store
-              .dispatch('LoginByUserName', this.loginForm)
+              .dispatch('LoginByUserName', {
+                phone: this.loginForm.username,
+                passwd: sha256(this.loginForm.password).toString(),
+              })
               .then(() => {
+                console.log('123')
                 this.loading = false;
                 this.$router.push({ path: '/' });
               })

@@ -79,7 +79,7 @@ module.exports = {
     proxy: {
       // 可不断添加
       "/api": {
-        target: "http://xk.quanfangtongvip.com",
+        target: "http://123.56.135.63",
         changeOrigin: true,
         pathRewrite: {
           "^/api": ""

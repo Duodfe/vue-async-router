@@ -1,6 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import { getToken, setToken, removeToken } from "@/utils/auth";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { getToken, setToken, removeToken } from '@/utils/auth';
+import { Login } from '@/api/login';
 
 Vue.use(Vuex);
 
@@ -9,25 +10,27 @@ export default new Vuex.Store({
     token: ''
   },
   mutations: {
-    SET_TOKEN: (state, token) => { 
-      state.token = token
+    SET_TOKEN: (state, token) => {
+      state.token = token;
     }
   },
   actions: {
     // 用户登录
-    LoginByUserName({ commit }, userInfo) { 
+    LoginByUserName({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-
-        setTimeout(function () { // 模拟请求
-          const data = {
-            token: 'test_token'
-          };
-          commit('SET_TOKEN', data.token);
-          setToken(data.token);
-          resolve();
-        }, 2000)
-
-      })
+        Login(userInfo)
+          .then(res => {
+            commit('SET_TOKEN', res.result.skey);
+            setToken(res.result.skey);
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     }
+  },
+  getters: {
+    token: state => state.token
   }
 });
